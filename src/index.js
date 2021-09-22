@@ -1,17 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+// import helpful from './helpers'; 
+// the name 'helpful' doesn't matter, however the path './helpers' IS important that it's exactly where the file is. 
+// the variable 'helpful' is merely a container to whatever is imported from './helpers'
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+// When importing more than one function from a module, we can no longer use the syntax:  import variable from path instead do
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+// In this case the name DOES matter because it needs to match the function
+// In case we want to use a default and also import other functions, the syntax is
+import helpful, { sort, sing } from './helpers';
+
+
+helpful();
+sort();
+sing();

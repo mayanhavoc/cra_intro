@@ -1,70 +1,108 @@
-# Getting Started with Create React App
+# create-react-app Introduction
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+CRA is built on top of "Webpack"
 
-## Available Scripts
+Webpack is a JS utility that
+- enables module importing/exporting
+    - packages up all CSS/images/JS into a single file for browser
+    - dramatically reduces number of requests for performance
+- hot reloading: when you change a source file, it automatically reloads.
+- enables easy testing & deployment
 
-In the project directory, you can run:
+## modules
 
-### `yarn start`
+CRA uses ES2015 'modules'. A way of sharing code, functions, classes, objects, etc., between JS files. 
+This is a newer, standardized version of Node's `require`.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Basically we need to explicitly export and explicitly export modules. 
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+1. We can set the default option to export when the whole file is required: 
 
-### `yarn test`
+In `helpers.js`
+```Javascript
+function hello() { 
+    console.log('hello') 
+    }
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+export default hello;
+```
+In `index.js`
+```Javascript
+import hello from './helpers.js';
+hello();
+```
 
-### `yarn build`
+🚨 Note that in the pattern `import <variable> from <path>` the variable name **does not** matter, it is only a container for the imported value (in this case, the function `hello`)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. We can export multiple functions
+In `helpers.js`
+```Javascript
+function hello(){
+    console.log('hello');
+}
+function sort(){
+    console.log('sort');
+}
+function sing(){
+    console.log('sing');
+}
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+export {hello, sort, sing};
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+In `index.js`
+```Javascript
+import {hello, sort, sing} from './helpers';
 
-### `yarn eject`
+hello();
+sort();
+sing();
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Note: in this case if we used the old syntax `import <variable> from <path>` we would've had an error. 
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. We can export a default and other functions
+In `helpers.js`
+```Javascript
+function hello(){
+    console.log('hello');
+}
+function sort(){
+    console.log('sort');
+}
+function sing(){
+    console.log('sing');
+}
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+export default hello;
+export {sort, sing};
+```
+In `index.js`
+```Javascript
+import hello, {sort, sing} from './helpers';
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+hello();
+sort();
+sing();
+```
 
-## Learn More
+Note: In this case, if we had used the old syntax `import {hello, sort, string} from 'helpers';` we would've had an error. 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## To use, or not to use `export default`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**Rule o'** 👍 
+Use `default export` when there is an obvious candidate. 
 
-### Code Splitting
+- For example in this syntax: 
+`import React from 'react'`
+          👆          👆
+    'exported module'  'looks for a react module in `node modules'
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Or in this syntax: 
+`import App from './app.js`
+        👆           👆
+exported module     path
 
-### Analyzing the Bundle Size
+You never need to create a `default export` but it can be helpful. 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
